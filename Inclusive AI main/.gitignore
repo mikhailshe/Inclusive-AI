@@ -1,0 +1,10 @@
+.DS_Store
+venv
+env
+.venv
+.env
+*.db
+*.sqlite3
+__pycache__
+staticfiles
+uploads
