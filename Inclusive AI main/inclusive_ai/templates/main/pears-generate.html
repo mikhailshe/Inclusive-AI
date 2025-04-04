@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% load static j_extras %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/pears.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include 'includes/header.html' %}
+<main>
+    <div class="container">
+        <h2>Pears — Обучающие сказки</h2>
+
+        <style>
+            .btn-group {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                border: 0;
+            }
+            .btn-group .btn {
+                margin: 5px;
+                border-radius: 5px;
+                padding: 0;
+                border: 1px solid #ccc;
+                cursor: pointer;
+            }
+            .btn-group .btn {
+                border-color: var(--accent-color);
+            }
+            .btn-group .btn input[type="radio"]:checked + span {
+                background-color: var(--accent-color);
+                color: white;
+            }
+            .btn-group .btn input[type="radio"] {
+                position: absolute;
+                opacity: 0;
+            }
+            .btn-group .btn span {
+                display: inline-block;
+                width: 100%;
+                height: 100%;
+                padding: 10px 20px;
+            }
+            .btn-group .btn.btn-ok span {
+                background-color: #339727 !important;
+                color: white;
+            }
+
+        </style>
+        
+        <div class="initiative-content">
+            {% for sentence in data.text %}
+            <p style="font-size: 150%; text-align: center; font-weight: 700; margin: 0;">
+                {% for part in sentence %}
+                    {% if part|is_numberic %}
+                        {% with answer=data.answers|index:part %}     
+                        </p>
+
+                        <fieldset class="btn-group" id="answer-buttons">
+                            {% for option in answer.options %}
+                                <label class="btn" for="{{ part }}{{ option }}">
+                                    <input type="radio" name="{{ part }}" id="{{ part }}{{ option }}" value="{% if option == answer.correct_word %}OK{% else %}WRONG{% endif %}">
+                                    <span style="font-size: 16px; {% if option == answer.correct_word %}font-weight: bold{% endif %}">{{ option }}</span>
+                                </label>
+                            {% endfor %}
+                        </fieldset>
+
+                        <p style="font-size: 150%; text-align: center; font-weight: 700; margin: 0;">
+
+                        {% endwith %}
+                    {% else %}
+                        {{ part }}
+                    {% endif %}
+                {% endfor %}.
+            </p>
+            <div style="height: 10px;"></div>
+            {% endfor %}
+
+            <div style="text-align: center;">
+                <button class="btn btn-solid" style="font-size: 120%; margin-top: 20px;" onclick="checkAnswer()" id="checkBtn">Проверить</button>
+            </div>
+        </div>
+        <code>DEV: {{ debug_i }}</code>
+    </div>
+    
+</main>
+
+<script>
+    var called = false;
+    function checkAnswer() {
+        if (called) {
+            location.replace('{% url "pears" %}');
+        }
+        called = true;
+        var answerButtons = document.querySelectorAll('.btn-group input[type="radio"]:checked');
+        answerButtons.forEach(function(button) {
+            if (button.value === "OK") {
+                button.parentNode.classList = "btn btn-ok";
+            } else {
+                button.parentNode.classList = "btn";
+            }
+        });
+        document.getElementById('checkBtn').innerHTML = "Сгенерировать новую историю";
+    }
+
+</script>
+
+{% endblock content %}

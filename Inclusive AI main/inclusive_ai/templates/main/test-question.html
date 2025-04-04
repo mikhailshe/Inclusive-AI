@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/pears.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include 'includes/header.html' %}
+
+<main>
+    <div class="container">
+        <h2 class="question-title">{{ question_title }}</h2>
+        <div class="answer-grid">
+            {% for answer in answers %}
+            <button class="answer-btn" onclick="selectAnswer('{{ answer }}')">{{ answer }}</button>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+
+<script>
+function selectAnswer(answer) {
+    // Here you would typically send the answer to the server
+    // For this example, we'll just reload the page
+    location.reload();
+}
+</script>
+
+{% endblock content %}

@@ -1,0 +1,16 @@
+<header>
+    <div class="container">
+        <h1><a href="{% url 'homepage' %}">Inclusive AI</a></h1>
+        {% if request.user.is_authenticated %}
+        <nav>
+            <a class="btn btn-outline" href="{% url 'initiatives' %}">Платформа</a>
+            <a class="btn btn-solid" href="{% url 'users:logout' %}">Выйти</a>
+        </nav>
+        {% else %}
+        <nav>
+            <a class="btn btn-outline" href="{% url 'users:login' %}">Вход</a>
+            <a class="btn btn-solid" href="{% url 'users:register' %}">Регистрация</a>
+        </nav>
+        {% endif %}
+    </div>
+</header>

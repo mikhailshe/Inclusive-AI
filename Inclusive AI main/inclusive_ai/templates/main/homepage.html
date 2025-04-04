@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+{% include 'includes/header.html' %}
+
+<div id="fullpage">
+    <div class="section" id="intro">
+        <div class="container" style="padding-top: 25vh; padding-bottom: 25vh; z-index: 2;">
+            {% if request.user.is_authenticated %}
+            <h2>Здравствуйте, @{{ request.user.username }}</h2>
+            {% else %}
+            <h2>Добро пожаловать в Inclusive&nbsp;AI</h2>
+            <p>Наш проект направлен на то, чтобы сделать искусственный интеллект более инклюзивным и доступным для всех. Мы верим в силу ИИ преобразовывать жизни и стремимся обеспечить, чтобы его преимущества были равномерно распределены среди всех сообществ.</p>
+            {% endif %}
+            <a class="btn btn-outline" href="{% url 'initiatives' %}">Перейти на платформу</a>
+        </div>
+        <svg viewBox="0 0 2203 1555" fill="none" xmlns="http://www.w3.org/2000/svg" class="responsive-svg" style="width: max(140vh, 140vw); position: absolute; bottom: min(-10vh, -10vw); left: min(-5vh, -5vw); z-index: 1;">
+            <path opacity="0.2" d="M1337.26 1074.77L1404.36 992.275C1486.44 891.372 1631.99 869.87 1739.74 942.732L1875.9 1034.81C1923.08 1066.71 1986.53 1059.06 2024.77 1016.87C2067.04 970.223 2142.24 977.162 2175.27 1030.75L2185.92 1048.04C2216.13 1097.08 2203.3 1161.14 2156.53 1194.75L2077.31 1251.68C2012.7 1298.11 1927.7 1304.97 1856.49 1269.49L1801.7 1242.19C1657.93 1170.56 1483.3 1218.18 1395.8 1352.88L1347.15 1427.77C1295.6 1507.12 1207.41 1555 1112.78 1555C1072.24 1555 1032.65 1542.7 999.245 1519.73L864.903 1427.35C778.808 1368.15 663.799 1373.63 583.728 1440.76C503.294 1508.19 387.66 1513.39 301.502 1453.44L239.017 1409.97C191.201 1376.7 152.977 1331.44 128.18 1278.73L60.7132 1135.33C20.7309 1050.34 0 957.582 0 863.662V777.102C0 665.78 29.1209 556.394 84.4711 459.807L299.766 84.112C341.891 10.6031 432.544 -19.4878 510.265 14.24C604.226 55.0157 639.348 170.22 584.115 256.48L294.607 708.616C272.741 742.765 259.366 781.652 255.6 822.026L250.982 871.533C235.169 1041.08 406.47 1165.82 562.977 1098.73C623.282 1072.88 691.878 1074.71 750.725 1103.72L889.989 1172.4C1043.6 1248.14 1229.18 1207.64 1337.26 1074.77Z" fill="#BCB7F2"/>
+        </svg>
+    </div>
+    
+    <div class="section section-initiatives" id="initiatives">
+        <div class="container" style="height: auto; z-index: 2;">
+            <h2>Наши инициативы</h2>
+            <div class="initiatives-grid">
+                <a href="{% url 'initiatives' %}" class="initiative">
+                    <img src="{% static 'img/ai1.jpeg' %}" alt="">
+                    <h3>Pears — Обучающие сказки</h3>
+                    <p>Новая методика обучения детей с расстройствами аутистического спектра новым словам и выражениям с помощью интерактивных сказок</p>
+                </a>
+                <a href="{% url 'initiatives' %}" class="initiative">
+                    <img src="{% static 'img/ai2.webp' %}" alt="">
+                    <h3>Диагностическое тестирование</h3>
+                    <p>Автоматически подстраивающееся диагностическое тестирование знаний и навыков детей с ограниченными возможностями здоровья</p>
+                </a>
+                <a href="{% url 'initiatives' %}" class="initiative">
+                    <img src="{% static 'img/ai3.png' %}" alt="">
+                    <h3>ИИ Задачник</h3>
+                    <p>Генерация персонализированных задач на основе диагностического тестирования</p>
+                </a>
+            </div>
+        </div>
+        <svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: 0; right: 0; width: 50%; height: 50%; opacity: 0.1; z-index: 1;">
+            <path d="M500,10C229.4,10,10,229.4,10,500s219.4,490,490,490s490-219.4,490-490S770.6,10,500,10z M500,927.8
+            C264.5,927.8,72.2,735.5,72.2,500S264.5,72.2,500,72.2S927.8,264.5,927.8,500S735.5,927.8,500,927.8z" fill="#BCB7F2"/>
+            <circle cx="500" cy="500" r="350" fill="none" stroke="#BCB7F2" stroke-width="20"/>
+            <circle cx="500" cy="500" r="250" fill="none" stroke="#BCB7F2" stroke-width="15"/>
+            <circle cx="500" cy="500" r="150" fill="none" stroke="#BCB7F2" stroke-width="10"/>
+        </svg>
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 0; left: 0; width: 30%; height: 30%; opacity: 0.1; z-index: 1;">
+            <path d="M20,50 Q50,20 80,50 T140,50" fill="none" stroke="#BCB7F2" stroke-width="4"/>
+            <path d="M20,80 Q50,50 80,80 T140,80" fill="none" stroke="#BCB7F2" stroke-width="4"/>
+            <path d="M20,110 Q50,80 80,110 T140,110" fill="none" stroke="#BCB7F2" stroke-width="4"/>
+            <circle cx="40" cy="140" r="15" fill="#BCB7F2"/>
+            <circle cx="100" cy="140" r="15" fill="#BCB7F2"/>
+            <circle cx="160" cy="140" r="15" fill="#BCB7F2"/>
+        </svg>
+    </div>
+
+    <div class="section" id="join">
+        <div class="container" style="z-index: 2;">
+            <h2>Присоединяйтесь к Нашей Миссии</h2>
+            <p>Мы всегда ищем увлеченных людей и организации для присоединения к нашей миссии. Независимо от того, являетесь ли вы экспертом в области ИИ, лидером мнений, педагогом или просто кем-то, кто заботится об инклюзивных технологиях, в нашем сообществе есть место для вас.</p>
+            <a class="btn btn-solid" href="mailto:ai@mikemka.ru">Присоединиться</a>
+        </div>
+        <svg viewBox="0 0 2203 1555" fill="none" xmlns="http://www.w3.org/2000/svg" class="responsive-svg" style="width: max(140vh, 140vw); position: absolute; bottom: min(-10vh, -10vw); left: min(-5vh, -5vw); z-index: 1;">
+            <path opacity="0.2" d="M1337.26 1074.77L1404.36 992.275C1486.44 891.372 1631.99 869.87 1739.74 942.732L1875.9 1034.81C1923.08 1066.71 1986.53 1059.06 2024.77 1016.87C2067.04 970.223 2142.24 977.162 2175.27 1030.75L2185.92 1048.04C2216.13 1097.08 2203.3 1161.14 2156.53 1194.75L2077.31 1251.68C2012.7 1298.11 1927.7 1304.97 1856.49 1269.49L1801.7 1242.19C1657.93 1170.56 1483.3 1218.18 1395.8 1352.88L1347.15 1427.77C1295.6 1507.12 1207.41 1555 1112.78 1555C1072.24 1555 1032.65 1542.7 999.245 1519.73L864.903 1427.35C778.808 1368.15 663.799 1373.63 583.728 1440.76C503.294 1508.19 387.66 1513.39 301.502 1453.44L239.017 1409.97C191.201 1376.7 152.977 1331.44 128.18 1278.73L60.7132 1135.33C20.7309 1050.34 0 957.582 0 863.662V777.102C0 665.78 29.1209 556.394 84.4711 459.807L299.766 84.112C341.891 10.6031 432.544 -19.4878 510.265 14.24C604.226 55.0157 639.348 170.22 584.115 256.48L294.607 708.616C272.741 742.765 259.366 781.652 255.6 822.026L250.982 871.533C235.169 1041.08 406.47 1165.82 562.977 1098.73C623.282 1072.88 691.878 1074.71 750.725 1103.72L889.989 1172.4C1043.6 1248.14 1229.18 1207.64 1337.26 1074.77Z" fill="#BCB7F2"/>
+        </svg>
+    </div>
+
+    <div class="section" id="contact">
+        <div class="container" style="z-index: 2;">
+            <h2>Свяжитесь с Нами</h2>
+            <div class="contact-info">
+                <p>Email: ai@mikemka.ru</p>
+                <p>Phone: +7 (996) 897 93-41</p>
+            </div>
+            <div class="social-links">
+                <a href="tel:+79968979341" class="social-link">Phone</a>
+                <a href="mailto:ai@mikemka.ru" class="social-link">Email</a>
+                <a href="https://t.me/shevnin_m/" class="social-link">Telegram</a>
+                <a href="https://github.com/mikemka/" class="social-link">GitHub</a>
+            </div>
+            <p class="copyright">&copy; {% now 'Y' %} Inclusive AI. Все права защищены</p>
+        </div>
+        <svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 0; left: 0; width: 50%; height: 50%; opacity: 0.1; z-index: 1;">
+            <path d="M100,100 Q500,0 900,100 T900,900 100,900 100,100" fill="none" stroke="#BCB7F2" stroke-width="20"/>
+            <path d="M200,200 Q500,100 800,200 T800,800 200,800 200,200" fill="none" stroke="#BCB7F2" stroke-width="15"/>
+            <path d="M300,300 Q500,200 700,300 T700,700 300,700 300,300" fill="none" stroke="#BCB7F2" stroke-width="10"/>
+        </svg>
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: 0; right: 0; width: 30%; height: 30%; opacity: 0.1; z-index: 1;">
+            <rect x="20" y="20" width="160" height="160" fill="none" stroke="#BCB7F2" stroke-width="4" rx="20" ry="20"/>
+            <circle cx="100" cy="100" r="60" fill="none" stroke="#BCB7F2" stroke-width="4"/>
+            <path d="M70,100 L130,100 M100,70 L100,130" stroke="#BCB7F2" stroke-width="4"/>
+            <circle cx="60" cy="60" r="10" fill="#BCB7F2"/>
+            <circle cx="140" cy="60" r="10" fill="#BCB7F2"/>
+            <circle cx="60" cy="140" r="10" fill="#BCB7F2"/>
+            <circle cx="140" cy="140" r="10" fill="#BCB7F2"/>
+        </svg>
+    </div>
+</div>
+{% endblock %}
