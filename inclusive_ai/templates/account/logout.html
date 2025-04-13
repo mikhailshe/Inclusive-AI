@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+{% include "includes/header.html" %}
+<main>
+    <div class="container" style="max-width: 500px; margin: 5rem auto; text-align: center; background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
+        <h1 style="color: var(--accent-color); font-size: 24px;">Выход из аккаунта</h1>
+        <p style="margin: 1rem 0;">Вы уверены, что хотите выйти?</p>
+        <form method="post" action="{% url 'account_logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-solid">Выйти</button>
+        </form>
+        <div class="links" style="margin-top: 1rem;">
+            <a href="{% url 'homepage' %}" style="color: var(--accent-color); text-decoration: none;">На главную</a>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
