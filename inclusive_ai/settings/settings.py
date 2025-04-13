@@ -103,8 +103,11 @@ USE_DJANGO_JQUERY = True
 
 
 # ---------------------------- LLM & PROXY -----------------------------
-AI_PROXY = env.list('AI_PROXY', default='')
+AI_PROXY = env.str('AI_PROXY', default='')
 ANTHROPIC_API_KEY = env.list('ANTHROPIC_API_KEY', default='default')
+ANTHROPIC_MODEL = 'claude-3-haiku-20240307'
+ANTHROPIC_MAX_TOKENS = 200
+ANTHROPIC_TEMPERATURE = 0.7
 
 
 # -------------------------- INSTALLED APPS ----------------------------
