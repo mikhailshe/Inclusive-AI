@@ -1,50 +1,55 @@
-from ast import literal_eval
-from dotenv import load_dotenv
+import os
 from pathlib import Path
-from os import getenv
+
+import environ
+from django.contrib.staticfiles.storage import ManifestStaticFilesStorage
+from split_settings.tools import include
 
 
-LOGIN_URL = '/users/login/'
-
+# ------------------------ PROJECT DIRECTORIES -------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
+LOCALE_PATHS = [BASE_DIR / 'locale']
+LOGS_DIR = BASE_DIR / 'logs'
+MEDIA_ROOT = BASE_DIR / 'uploads'
 
-DOTENV_PATH = BASE_DIR / '.env'
 
-if DOTENV_PATH.exists():
-    load_dotenv(DOTENV_PATH)
+# ------------------------------ ENVIRON -------------------------------
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-SECRET_KEY = getenv('SECRET_KEY')
 
-DEBUG = literal_eval(getenv('DEBUG'))
+# ------------------------- SECURITY SETTINGS --------------------------
+allowed_hosts = env.list('ALLOWED_HOSTS', default=[])
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost'] + allowed_hosts
 
-ALLOWED_HOSTS = [
-    *map(lambda i: i.strip(), getenv('HOSTS').split(';')),
-    '127.0.0.1',
-    'localhost',
-]
 
-CSRF_TRUSTED_ORIGINS = [
-    *(i.strip() for i in getenv('URLS').split(';')),
-    'http://127.0.0.1',
-    'http://localhost',
-]
+# -------------------------- DEBUG SETTINGS ----------------------------
+DEBUG = env.bool('DEBUG', default=False)
+TEMPLATE_DEBUG = env.bool('TEMPLATE_DEBUG', default=False)
 
-# Application definition
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    
-    'sorl.thumbnail',
-    
-    'main',
-    'users',
-]
 
+# --------------------------- SITE SETTINGS ----------------------------
+SITE_ID = 1
+
+
+# -------------------------- WSGI SETTINGS -----------------------------
+WSGI_APPLICATION = 'settings.wsgi.application'
+
+
+# -------------------------- URL SETTINGS ------------------------------
+ADMIN_MEDIA_PREFIX = '/media/dev/admin//'
+MEDIA_URL = '/media/'
+ROOT_URLCONF = 'settings.urls'
+STATIC_URL = '/static/'
+
+
+# --------------------------- AUTH SETTINGS ----------------------------
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',]
+
+
+# ------------------------ MIDDLEWARE SETTINGS -------------------------
 MIDDLEWARE = [
+    # ------------------ DJANGO -------------------
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -52,94 +57,101 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
-ROOT_URLCONF = 'settings.urls'
 
+# ------------------------- TEMPLATE SETTINGS --------------------------
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            BASE_DIR / 'templates',
-        ],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
+                # ------------------ DJANGO -------------------
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
+                'django.template.context_processors.debug',
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'settings.wsgi.application'
+# ---------------------------- STATICFILES -----------------------------
+# Механизмы для поиска статических файлов
+STATICFILES_FINDERS = (
+    # Поиск в директориях, указанных в STATICFILES_DIRS
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    # Поиск в поддиректории static каждого приложения
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
 
-# Database
+# Класс хранилища для статических файлов
+# ManifestStaticFilesStorage добавляет хэш к именам
+# файлов для инвалидации кэша
+STATICFILES_STORAGE = ManifestStaticFilesStorage
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+if DEBUG:
+    STATIC_DIR = BASE_DIR / 'static'
+    STATICFILES_DIRS = [STATIC_DIR]
+else:
+    STATIC_ROOT = BASE_DIR / 'static'
 
-USE_PSQL = literal_eval(getenv('USE_PSQL'))
-
-if USE_PSQL:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': getenv('DB_NAME'),
-            'USER': getenv('DB_USER'),
-            'PASSWORD': getenv('DB_PASSWORD'),
-            'HOST': getenv('DB_HOST'),
-            'PORT': getenv('DB_PORT'),
-        }
-    }
+USE_DJANGO_JQUERY = True
 
 
-# Password validation
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+# ---------------------------- LLM & PROXY -----------------------------
+AI_PROXY = env.list('AI_PROXY', default='')
+ANTHROPIC_API_KEY = env.list('ANTHROPIC_API_KEY', default='default')
+
+
+# -------------------------- INSTALLED APPS ----------------------------
+INSTALLED_APPS = [
+    # ------------------ DJANGO -------------------
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.messages',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
+    'django.contrib.staticfiles',
+
+    # ------------------ OTHER --------------------
+    'allauth',
+    'allauth.account',
+    'sorl.thumbnail',
+
+    # ----------------- PROJECT -------------------
+    'apps.pages',
+    'apps.pears',
 ]
 
 
-# Internationalization
-LANGUAGE_CODE = 'ru'
-TIME_ZONE = 'Asia/Yekaterinburg'
-USE_I18N = True
-USE_TZ = True
+# ------------------------ ADDITIONAL SETTINGS -------------------------
+include(
+    # ----------------- SECURITY ------------------
+    'components/security/base.py',
+    'components/security/content_security.py',
+    'components/security/cors.py',
+    'components/security/csrf.py',
+    'components/security/orm_security.py',
+    'components/security/session.py',
+    'components/security/throttling.py',
 
+    # --------------- PERFORMANCE -----------------
+    'components/performance/caches.py',
+    'components/performance/compression.py',
 
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
+    # ----------------- DATABASE ------------------
+    'components/database/sqlite.py',
+    'components/database/postgresql.py',
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
+    # -------------- AUTHENTICATION ---------------
+    'components/authentication/account.py',
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-MEDIA_URL = '/media/'
-
-MEDIA_ROOT = BASE_DIR / 'uploads'
-
-# Default primary key field type
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-ANTHROPIC_API_KEY = getenv('ANTHROPIC_API_KEY')
-
-AI_PROXY = getenv('AI_PROXY')
+    # ----------- INTERNATIONALIZATION ------------
+    'components/internationalization/base.py',
+)
