@@ -11,6 +11,10 @@
 {% include 'includes/header.html' %}
 
 <main>
+    <div style="text-align: right; margin-bottom: 10px;">
+        <button onclick="changeFontSize(1)" class="btn btn-outline" style="font-size: 14px;">A+</button>
+        <button onclick="changeFontSize(-1)" class="btn btn-outline" style="font-size: 14px;">A-</button>
+    </div>
     <div class="container">
         <h2>Pears — Обучающие сказки</h2>
         {% if error %}
@@ -111,5 +115,15 @@
             sendMessage();
         }
     });
+</script>
+<script>
+    let currentFontSize = 100;
+
+    function changeFontSize(change) {
+        currentFontSize += change * 10;
+        if (currentFontSize < 80) currentFontSize = 80;
+        if (currentFontSize > 200) currentFontSize = 200;
+        document.querySelector('main').style.fontSize = currentFontSize + '%';
+    }
 </script>
 {% endblock content %}
