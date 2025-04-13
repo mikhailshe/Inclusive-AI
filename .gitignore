@@ -1,10 +1,117 @@
-.DS_Store
-venv
-env
-.venv
+# Переменные окружения
 .env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+all_code.txt
+fc.py.py
+
+# Django
 *.db
 *.sqlite3
-__pycache__
-staticfiles
-uploads
+*.sqlite3-journal
+db.sqlite3
+db.sqlite3-journal
+*.log
+local_settings.py
+media/
+staticfiles/
+uploads/
+
+# Виртуальное окружение
+venv/
+env/
+ENV/
+.venv/
+.env/
+env.bak/
+venv.bak/
+
+# Папки с временными файлами
+logs/
+temp/
+tmp/
+
+# Настройки IDE
+.idea/
+.ruff_cache
+.vscode/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# Файлы в проекте, но не для репозитория
+notes.txt
+todo.txt
+_todo/
+_private/
+
+# Файлы переводов МО
+*.mo
+
+# Сгенерированные файлы
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+.ruff_cache/
+pytest-report.xml
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# Node.js / frontend
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Файлы резервных копий
+*.bak
+*.back
+*.backup
+
+# Other
+.DS_Store
