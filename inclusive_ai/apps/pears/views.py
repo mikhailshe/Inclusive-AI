@@ -42,12 +42,12 @@ def pears(request: HttpRequest) -> HttpResponse:
             '8. REMOVE TITLE BEFORE ANSWERS AND STORY!!! ONLY TEXT!!!'
             '9. CHECK AND FIX IF ANY WORDS ARE MISSING: EVERY ID IN TEXT MUST HAVE ANSWER WITH THAT ID IN LIST!!! DO NOT STRIP WORDS!!\n\n'
         )
-
         
         response = client.messages.create(
             model=settings.ANTHROPIC_MODEL,
             max_tokens=settings.ANTHROPIC_MAX_TOKENS,
             temperature=settings.ANTHROPIC_TEMPERATURE,
+            system=system_prompt,
             messages=[{"role": "user", "content": f"Short plot: {messages}"}]
         )
         return response.content[0].text
