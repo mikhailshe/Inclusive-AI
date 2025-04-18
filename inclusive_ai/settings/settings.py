@@ -158,3 +158,7 @@ include(
     # ----------- INTERNATIONALIZATION ------------
     'components/internationalization/base.py',
 )
+# -------------------------- ACCOUNT FORMS ----------------------------
+ACCOUNT_FORMS = {
+    'signup': 'apps.pages.forms.CustomSignupForm',
+}
