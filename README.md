@@ -4,13 +4,5 @@
 
 ---
 
-## Makefile команды
-```makefile
-make migrate       # Выполнить миграции
-make run           # Запустить dev-сервер Django
-make collectstatic # Собрать статику
-make superuser     # Создать суперпользователя
-```
-
 ## Лицензия
 [MIT License](./LICENSE)
