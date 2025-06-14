@@ -9,7 +9,8 @@
 git clone https://github.com/your-name/inclusive-ai.git
 cd inclusive-ai
 
-### 2. Создаём .env
+### 2. Создаём .env (предварительно добавить API key в env.example)
+touch inclusive_ai/.env
 cp inclusive_ai/env.example inclusive_ai/.env
 
 ### 3 Устанавка uv
