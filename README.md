@@ -17,7 +17,7 @@ cp inclusive_ai/env.example inclusive_ai/.env
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 ### 4. Создание виртуального окружения
-uv venv
+uv venv source .venv/bin/activate
 
 ### 5. Запуск
 make migrate
