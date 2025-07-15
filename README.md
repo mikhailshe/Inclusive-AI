@@ -6,7 +6,7 @@
 
 ## Быстрый старт (локально)
 ### 1. Клонируем репозиторий
-git clone https://github.com/your-name/inclusive-ai.git
+git clone https://github.com/mikhailshe/inclusive-ai.git
 cd inclusive-ai
 
 ### 2. Создаём .env (предварительно добавить API key в env.example)
